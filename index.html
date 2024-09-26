@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animated Pokéball with Opacity Change</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet">
+    <style>
+        /* Styling the buttons */
+        .btn {
+            padding: 10px 20px;
+            margin: 20px;
+            background-color: #ff6b6b;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .btn:hover {
+            background-color: #ff3d3d;
+        }
+
+        /* Pokéball styling */
+        .pokeball {
+            width: 200px;
+            height: 200px;
+            background-color: #fff;
+            border: 10px solid #000;
+            border-radius: 50%;
+            position: relative;
+            overflow: hidden;
+            margin: 20px auto;
+            transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
+        }
+        .pokeball::before {
+            content: '';
+            position: absolute;
+            background-color: red;
+            width: 100%;
+            height: 50%;
+            top: 0;
+            left: 0;
+        }
+        .pokeball::after {
+            content: '';
+            position: absolute;
+            top: calc(50% - 5px);
+            left: 0;
+            width: 100%;
+            height: 10px;
+            background-color: #000;
+        }
+        .pokeball-button {
+            width: 40px;
+            height: 40px;
+            background-color: #fff;
+            border: 10px solid #000;
+            border-radius: 50%;
+            position: absolute;
+            top: calc(50% - 20px);
+            left: calc(50% - 20px);
+            z-index: 10;
+        }
+        .pokeball-button::before {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: #fff;
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 0 5px #000;
+        }
+
+        /* Text inside the Pokéball */
+        .pokeball-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 24px;
+            font-weight: bold;
+            text-align: center;
+            font-family: 'Dancing Script', cursive;
+            color: #FF1493; /* Deep Pink color */
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+            z-index: 20;
+        }
+
+        /* Pokéball animation */
+        @keyframes shake {
+            0% { transform: rotate(0deg); }
+            25% { transform: rotate(-10deg); }
+            50% { transform: rotate(10deg); }
+            75% { transform: rotate(-10deg); }
+            100% { transform: rotate(0deg); }
+        }
+
+        .shake {
+            animation: shake 0.5s ease-in-out;
+        }
+
+        .dimmed {
+            opacity: 0.7;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Buttons for actions -->
+    <div style="text-align: center;">
+        <button class="btn" id="wannaTry">Wanna Try</button>
+        <button class="btn" id="ignoring">Ignoring</button>
+    </div>
+
+    <!-- Pokéball structure with text inside -->
+    <div id="pokeball" class="pokeball">
+        <div class="pokeball-button"></div>
+        <div id="pokeballText" class="pokeball-text"></div>
+    </div>
+
+    <script>
+        const pokeball = document.getElementById('pokeball');
+        const pokeballText = document.getElementById('pokeballText');
+
+        function animatePokeball(message) {
+            pokeball.classList.add('shake');
+            setTimeout(() => {
+                pokeball.classList.remove('shake');
+                pokeball.classList.add('dimmed');
+                pokeballText.textContent = message;
+                pokeballText.style.opacity = '1';
+            }, 500);
+        }
+
+        document.getElementById('wannaTry').addEventListener('click', function() {
+            animatePokeball("Aap cutee hooo");
+        });
+
+        document.getElementById('ignoring').addEventListener('click', function() {
+            animatePokeball("Aap still cutee ho");
+        });
+    </script>
+
+</body>
+</html>
